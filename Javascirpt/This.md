@@ -4,7 +4,7 @@
 
 #### 1.Basic 
 
-```
+```javascript
 function square(number) {
 
   console.log(arguments);
@@ -14,7 +14,7 @@ function square(number) {
 }
 
 square(2);
-```
+```javascript
 
 
 2. 함수를 선언할 때 this에 바인딩할 객체가 정적으로 결정 X
@@ -22,7 +22,7 @@ square(2);
    ※함수의 상위 스코프를 결정하는 방식인 렉시컬 스코프(Lexical scope)는 함수를 선언할 때 결정
 
 
-```　
+```javascript
 var foo = function () {
   console.dir(this);
 };
@@ -55,7 +55,7 @@ foo.bind(bar)(); // bar
    ※ 환경에 따른 최상위 객체
    　Browser-side： window,
    　Server-side(Node.js)： global
-```
+```javascript
 // in browser console
 this === window // true
 
@@ -66,7 +66,7 @@ this === global // true
 
 
   1-2. 글로벌 영역에 함수를 선언한다면 전역객체의 프로퍼티(전역 변수의 메소드)로 접근가능.
-```
+```javascript
 var ga = 'Global variable';
 
 console.log(ga);
