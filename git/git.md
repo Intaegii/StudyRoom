@@ -24,6 +24,10 @@ https://abled.tistory.com/2
 #### 3. 리포지토리(repository, 저장소)
   리포지토리는 스테이지에서 대기하고 있던 파일들을 버전으로 만들어 저장하는 곳.
 
+
+## git 조작　</br>
+
+
 #### 상태확인
 ```
 $ git status
