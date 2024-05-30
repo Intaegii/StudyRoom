@@ -5,21 +5,27 @@ refer: https://velog.io/@wiostz98kr/REST-API%EC%9D%98-%EA%B0%9C%EB%85%90%EA%B3%B
 1.1 개념
 ```
 HTTP를 이용해 통신할 때의 모범 형식
-🔔 REST API = RESTful한 API = HTTP 통신 시 REST 원리를 따르는 API
+※REST API = RESTful한 API = HTTP 통신 시 REST 원리를 따르는 API
 ```
 
-∴ REST는 HTTP 요청을 보낼 때 어떤 URI에 어떤 메소드를 사용할지, 각 요청이 어떤 동작이나 정보를 위한 것인지를 그 요청의 모습 자체로 추론이 가능하도록 하기 위해 개발자들 사이에 널리 지켜지는 약속이다.
+∴ REST는 HTTP 요청을 보낼 때 어떤 URI에 어떤 메소드를 사용할지, 각 요청이 어떤 동작이나 정보를 위한 것인지를 
+그 요청의 모습 자체로 추론이 가능하도록 하기 위해 개발자들 사이에 널리 지켜지는 약속이다.  
 
 
 #### 1.2 사용 이유
 기능 자체만을 중요시한다면 그냥 요청에 맞춰 동작하게만 만들면 되지만, 협업을 하거나 유지보수할 때 힘들다.
 
-RESTful 하게 만든 API는 누가, 언제 이 요청을 보더라도 대략 무엇을 하는 요청인지 파악이 가능하다.
+RESTful 하게 만든 API는 누가, 언제 이 요청을 보더라도 대략 무엇을 하는 요청인지 파악이 가능하다.  
+
+
+
 
 #### 1.3 REST의 구성
 ・자원(Resource) - URI
 ・행위(Verb) - HTTP Method
 ・표현(Representations)
+
+
 
 #### 1.4 REST의 특징
 ・Uniform Interface(유니폼 인터페이스)
@@ -40,12 +46,14 @@ RESTful 하게 만든 API는 누가, 언제 이 요청을 보더라도 대략 �
 ・계층형 구조
 : REST 서버는 다중 계층으로 구성될 수 있으며 보안, 로드 밸런싱, 암호화 계층을 추가해 구조상의 유연성을 둘 수 있고 프록시, 게이트웨이 같은 네트워크 기반의 중간매체를 사용할 수 있게 한다.
 
+
 ### 2. REST API 설계 디자인 규칙
 REST API 설계 시 가장 중요한 항목은 다음의 2가지로 요약가능
 ```
 ・첫 번째, URI는 정보의 자원을 표현해야 한다.
 ・두 번째, 자원에 대한 행위는 HTTP Method(GET, POST, PUT, DELETE)로 표현한다
 ```
+
 
 #### 2.1 URI Rules
 ・정보의 자원을 표현해야 한다. (동사보다 명사 사용)
@@ -65,6 +73,7 @@ REST API 설계 시 가장 중요한 항목은 다음의 2가지로 요약가능
 
 ・컬렉션과 도큐먼트 사용 시 단수 복수를 지키자. → 컬렉션 복수로 표현
 
+
 #### 2.2 HTTP Headers
 ・Content-Location
 : POST 요청은 GET이나 PUT과 달리 대부분 idempotent(멱등: 반환되는 응답 리소스의 결과가 항상 동일)하지 않다. 따라서 요청의 응답 헤더에 새로 생성된 리소스를 식별할 수 있는 Content-Location 속성을 이용하자.
@@ -81,6 +90,7 @@ Content-Location: /users/1
 ・Content-Type
 : 되도록이면 application/json만을 제공하자. applicaion/xml 등을 사용하여 응답 포맷을 이원화하지 말자.
 
+
 #### 2.3 HTTP Methods
 다음과 같이 상황에 따라 알맞은 method를 사용하자.
 
@@ -90,12 +100,15 @@ Content-Location: /users/1
 ・PATCH : 리소스 일부 수정. 변경하려는 속성만 보내면 된다.
 ・DELETE: 리소스 삭제.
 
+
 #### 2.4 HTTP Status Code
 HTTP status만으로 상태 에러를 나타낸다. (응답 객체에 중복으로 상태 코드를 표시할 필요X)
 성공은 2XX, 실패는 4XX (5XX는 절대 사용자에게 나타내지 말자.)
 다음과 같이 상황에 따라 알맞은 status를 사용하자.
 
+
 ■ 2XX
+
 ・200: [OK] - 요청을 정상적으로 수행함
 
 ・201: [Created] - 요청에 성공하고 새로운 리소스를 만든 경우(POST, PUT에 사용)
@@ -105,7 +118,9 @@ HTTP status만으로 상태 에러를 나타낸다. (응답 객체에 중복으�
 
 ・204: [No Content] - 응답 body가 필요 없는 자원 삭제 요청(DELETE) 같은 경우에 응답
 
+
 ■ 4XX
+
 ・400: [Bad Request] - 클라이언트 요청이 미리 정의된 파라미터 요구사항을 위반한 경우
 → 파라미터의 위치(path, query, body), 사용자 입력 값, 에러 이유 등을 반드시 알리자.
 
@@ -122,6 +137,9 @@ HTTP status만으로 상태 에러를 나타낸다. (응답 객체에 중복으�
 
 ・429:[Too Many Requests] - DoS, Brute-force attck과 같은 비정상적인 접근을 막기위해 요청의 수를 제한
 
+
+
 ■ 5XX
+
 ・500: 서버에 문제가 있을 경우 사용 → API Server가 모든 발생 가능한 에러를 핸들링하여 이 에러가 나지 않도록 해야 한다.
 
