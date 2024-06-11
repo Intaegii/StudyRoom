@@ -1,9 +1,8 @@
-refer URL：https://pks2974.medium.com/javascript%EC%99%80-%EB%B0%98%EB%B3%B5%EB%AC%B8-67e412e9b9b9
 
 ### LOOP at javascript
 
 
-#### 1
+#### 1. for
 ``` javascript
 
 for(var i = 0; i < 2; i++) { console.log(i); }
@@ -22,7 +21,7 @@ for(i ; i < length; i++)
 
 ```
 
-#### 2 for in
+#### 2. for in
 for( property in object ) 은 객체의 심볼이 아닌 열거 [[Enumerable]] 가능한 모든 property 을 반복 할 수 있다.
 
 Enumerable 은 Object.defineProperty 으로 설정이 가능하다.
@@ -54,7 +53,7 @@ for (var v in new fn()) {
 
 ```
 
-### 3 for of
+#### 3. for of
 iterables 에는 String, Array, TypedArray, Map, Set
 
 ``` javascript
@@ -82,7 +81,7 @@ for (var v of sets) {
 
 ```
 
-### 4 for of
+#### 4. forEach
 배열 객체를 반복하는 메서드 
 Array.prototype.forEach
 
@@ -108,3 +107,6 @@ arr.forEach((v, idx)=>{
 // 5  , []
 
 ```
+
+refer URL：https://pks2974.medium.com/javascript%EC%99%80-%EB%B0%98%EB%B3%B5%EB%AC%B8-67e412e9b9b9
+
