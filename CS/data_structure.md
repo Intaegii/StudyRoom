@@ -235,3 +235,172 @@ print('data_queue:', data_queue)
 print('type:', type(data_queue))
 
 print()
+
+# 데이터 삽입 (put)
+
+data_queue.put(1)
+data_queue.put(2)
+data_queue.put(3)
+
+print('data_queue.qsize():', data_queue.qsize()) >>> 3
+
+print()
+
+# 데이터 추출 (get)
+
+print('data_queue.get():', data_queue.get()) >>> 3
+print('data_queue.get():', data_queue.get()) >>> 2
+print('data_queue.get():', data_queue.get()) >>> 1
+
+```
+
+</details>
+
+PriorityQueue(): 데이터마다 우선순위를 넣어서, 우선순위가 높은 순으로 데이터 출력
+
+<details>
+
+```py
+# PriorityQueue() 우선 순위가 있는 큐 만들기
+
+import queue
+
+data_queue = queue.PriorityQueue()
+
+# - 튜플 형식 ( , )으로 데이터를 삽인한다
+# - 숫자가 낮을수록 우선순위가 높다 (1 <<<<< 우선 순위가 높음 , .... , 15 <<<< 우선 순위가 낮음)
+# - 우선순위가 높은 튜플이 먼저 Dequeue 된다
+
+data_queue.put((10, "korea"))
+data_queue.put((5, 1))
+data_queue.put((15, "china"))
+
+print()
+
+print(data_queue.qsize())  # >>> 3
+
+print()
+
+print(data_queue.get())  # >>> (5,1)
+print(data_queue.get())  # >>> (10, 'korea')
+print(data_queue.get())  # >>> (15, 'china')
+
+```
+
+</details>
+
+#### 어디에 큐가 많이 쓰일까?
+
+**멀티 태스킹을 위한 프로세스 스케쥴링 방식을 구현하기 위해 많이 사용된다**
+
+#### queue 직접 구현하기
+
+```py
+queue_list = list()
+
+
+def enqueue(data):
+    queue_list.append(data)
+
+
+def dequeue():
+    data = queue_list[0]
+    del queue_list[0]
+    return data
+
+
+for index in range(10):
+    enqueue(index)
+
+print('queue_list:', queue_list)
+# >>> queue_list: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+dequeue()
+
+print('queue_list:', queue_list)
+# >>> queue_list: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+
+### 스택
+
+Stack 구조
+
+- 데이터를 제한적으로 접근할 수 있는 구조
+- 한쪽 끝에서만 자료를 넣거나 뺄 수 있는 구조
+- 가장 나중에 쌓은 데이터를 가장 먼저 빼낼 수 있는 데이터 구조
+
+|            큐(Queue)             |           스택(Stack)           |
+| :------------------------------: | :-----------------------------: |
+| F.I.F.O <br/> First In First Out | L.I.F.O <br/> Last In First Out |
+
+`스택 구조`
+
+스택은 LIFO(Last In, Fisrt Out) 또는 FILO(First In, Last Out) 데이터 관리 방식을 따름
+
+LIFO: 마지막에 넣은 데이터를 가장 먼저 추출하는 데이터 관리 정책
+FILO: 처음에 넣은 데이터를 가장 마지막에 추출하는 데이터 관리 정책
+
+`대표적인 스택의 활용`
+
+컴퓨터 내부의 프로세스 구조의 함수 동작 방식
+
+`주요 기능`
+
+push(): 데이터를 스택에 넣기
+pop(): 데이터를 스택에서 꺼내기
+
+<img src="https://github.com/junh0328/zero_base_algorithm/raw/main/images/stack.gif" alt="스택">
+
+`스택의 장단점`
+
+- 장점 🔥
+
+  - 구조가 단순해서, 구현이 쉽다
+  - 데이터 저장/읽기 속도가 빠르다
+
+- 단점 🔥
+
+  - 데이터 최대 개수를 미리 정해야 한다
+  - 파이썬의 경우 재귀 함수 호출은 1000번까지 가능하다
+
+  - 저장 공간의 낭비가 발생할 수 있다
+  - 미리 최대 개수만큼 저장 공간을 확보해야 한다
+
+- 스택은 단순하고 빠른 성능을 위해 사용되므로, 보통 배열 구조를 활용해서 구현하는 것이 일반적임
+
+<br/>
+
+#### 파이썬을 통해 스택 구조 살펴보기
+
+list 자료형의 내장 메서드로 append(push), pop() 메서드를 제공한다
+
+```py
+# 스택 (Stack)
+
+# 큐와 달리 파이썬, JS 에서 기본 제공하는 리스트를 통해서 구현이 가능하다
+# 큐의 경우 data = queue.Queue() 와 같이 인스턴스로 만들어서 사용했었음
+
+# append: 삽입하기 (push)
+# pop: 꺼내기 (pop)
+
+data_stack = list()
+
+data_stack.append(1)
+data_stack.append(2)
+
+print('data_stack:', data_stack) >>> [1,2]
+
+print()
+
+data_stack.pop()
+
+print('① data_stack.pop():', data_stack) >>> [1]
+
+print()
+
+data_stack.pop()
+
+print('② data_stack.pop():', data_stack) >>> [0]
+
+
+```
