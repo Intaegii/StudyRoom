@@ -1,5 +1,7 @@
 
 ### 트랜잭션이란
+
+
 * 트랜잭션(Transaction) 이란
     * 데이터베이스의 상태를 변환시키는 하나의 논리적인 작업 단위를 구성하는 연산들의 집합이다.
         * 예를들어, A계좌에서 B계좌로 일정 금액을 이체한다고 가정하자.
@@ -8,6 +10,7 @@
           3. B계좌의 잔액을 확인한다.
           4. B계좌의 금액에서 이체할 금액을 더하고 다시 저장한다.
         * 이러한 과정들이 모두 합쳐져 계좌이체라는 하나의 작업단위를 구성한다.
+          
     * 하나의 트랜잭션은 Commit 되거나 Rollback 된다.
         * Commit 연산
             * 한개의 논리적 단위(트랜잭션)에 대한 작업이 성공적으로 끝나 데이터베이스가 다시 일관된 상태에 있을 때, 이 트랜잭션이 행한 갱신 연산이 완료된 것을 트랜잭션 관리자에게 알려주는 연산이다.
@@ -15,6 +18,8 @@
             * 하나의 트랜잭션 처리가 비정상적으로 종료되어 데이터베이스의 일관성을 깨뜨렸을 때, 이 트랜잭션의 일부가 정상적으로 처리되었더라도 트랜잭션의 원자성을 구현하기 위해 이 트랜잭션이 행한 모든 연산을 취소(Undo)하는 연산이다.
             * Rollback 시에는 해당 트랜잭션을 재시작하거나 폐기한다.
     * 데이터베이스 응용 프로그램은 트랜잭션들의 집합으로 정의 할 수 있다.
+
+
 * 트랜잭션의 성질(ACID)
     * 원자성(Atomicity), All or nothing
         * 트랜잭션의 모든 연산들은 정상적으로 수행 완료되거나 아니면 전혀 어떠한 연산도 수행되지 않은 상태를 보장해야 한다.
@@ -24,12 +29,15 @@
         * 하나의 트랜잭션이 실행하는 도중에 변경한 데이터는 이 트랜잭션이 완료될 때까지 다른 트랜잭션이 참조하지 못한다.
     * 지속성(Durability)
         * 성공적으로 수행된 트랜잭션은 영원히 반영되어야 한다.
+
+
 * 트랜잭션의 필요성
     * 현금 인출기를 작동하는 도중에 기계오류나 정전 등과 같은 예기치 않은 상황이 발생하여 카드가 나오지 않거나 기계가 멈추는 경우
     * 각각 다른 지점의 은행에서 동시에 인출할 때, 하나의 지점이 다른 지점에서 저장한 잔액을 덮어 쓰는 경우
     * 위와 같은 상황이 발생되지 않도록 방지하기 위해, 즉, 트랜잭션의 성질인 ACID를 제공받기위해 트랜잭션을 사용한다.
+
+
 * 트랜잭션의 상태  
-    <img src="./images/transaction-status.png" width="70%" height="70%">
     * 활동(Active)
         * 트랜잭션이 실행 중에 있는 상태, 연산들이 정상적으로 실행 중인 상태
     * 장애(Failed)
@@ -41,15 +49,19 @@
     * 완료(Committed)
         * 트랜잭션이 성공적으로 종료되어 Commit 연산을 실행한 후의 상태
 
+
 > :arrow_double_up:[Top](#4-database)    :leftwards_arrow_with_hook:[Back](https://github.com/WeareSoft/tech-interview#4-database)    :information_source:[Home](https://github.com/WeareSoft/tech-interview#tech-interview)
 > - [http://limkydev.tistory.com/100](http://limkydev.tistory.com/100)
 > - [http://coding-factory.tistory.com/226](http://coding-factory.tistory.com/226)
 > - [http://yimoyimo.tk/transaction_DI/](http://yimoyimo.tk/transaction_DI/)
 > - [https://d2.naver.com/helloworld/407507](https://d2.naver.com/helloworld/407507)
 
+
 ### 트랜잭션 격리 수준
+
 * Isolation Level 이란?
     * 트랜잭션에서 일관성이 없는 데이터를 허용하도록 하는 수준
+
 * Isolation Level 의 필요성
     * 데이터베이스는 ACID 같이 트랜잭션이 원자적이면서도 독립적인 수행을 하도록 한다.
     * 그래서 Locking 이라는 개념이 등장한다.
@@ -57,6 +69,8 @@
     * 하지만 무조건적인 Locking으로 동시에 수행되는 많은 트랜잭션들을 순서대로 처리하는 방식으로 구현되면 DB의 성능은 떨어지게 된다.
     * 반대로 응답성을 높이기 위해 Locking 범위를 줄인다면 잘못된 값이 처리 될 여지가 있다.
     * 그래서 최대한 효율적인 Locking 방법이 필요하다.
+
+
 * Isolation Level 의 종류
     1. Read Uncommitted (레벨 0)
         * SELECT 문장이 수행되는 동안 해당 데이터에 Shared Lock이 걸리지 않는 Level
@@ -79,6 +93,8 @@
         * 따라서, 다른 사용자는 그 영역에 해당되는 데이터에 대한 수정 및 입력이 불가능하다.
     * Isolation level 조정은 동시성이 증가되는데 반해 데이터 무결성에 문제가 발생할 수 있고, 데이터의 무결성을 유지하는 데 반해 동시성이 떨어질 수 있다.
     * 레벨이 높아질수록 비용이 높아진다.
+
+
 * 낮은 단계의 Isolation Level 이용시 발생하는 현상  
     <img src="./images/isolation-level.png" width="70%" height="70%">
     * Dirty Read
@@ -94,16 +110,17 @@
 > - [http://hundredin.net/2012/07/26/isolation-level/](http://hundredin.net/2012/07/26/isolation-level/)
 > - [http://egloos.zum.com/ljlave/v/1530887](http://egloos.zum.com/ljlave/v/1530887)
 
+
 ### Join
 * 조인이란
     * **한 데이터베이스 내의 여러 테이블의 레코드를 조합하여 하나의 열로 표현한 것**이다.
     * 따라서 조인은 테이블로서 저장되거나, 그 자체로 이용할 수 있는 결과 셋을 만들어 낸다.
+    * 
 * 조인의 필요성
     * 관계형 데이터베이스의 구조적 특징으로 정규화를 수행하면 의미 있는 데이터의 집합으로 테이블이 구성되고, 각 테이블끼리는 관계(Relationship)를 갖게 된다. 
     * 이와 같은 특징으로 관계형 데이터베이스는 저장 공간의 효율성과 확장성이 향상되게 된다.
     * 다른 한편으로는 서로 관계있는 데이터가 여러 테이블로 나뉘어 저장되므로, 각 테이블에 저장된 데이터를 효과적으로 검색하기 위해 조인이 필요하다.
 
-<img src="./images/join-table.png" width="70%" height="70%">
 
 * 조인의 종류
     1. **내부 조인(INNER JOIN)**
@@ -124,8 +141,8 @@
                 FROM employee, department
                 WHERE employee.DepartmentID = department.DepartmentID;
                 ```
-        * 결과  
-            <img src="./images/inner-join.png" width="70%" height="70%">
+
+
         1. **동등 조인(EQUI JOIN)**
             * 비교자 기반의 조인이며, 조인 구문에서 **동등비교만을 사용**한다.
             * 다른 비교 연산자(<와 같은)를 사용하는 것은 동등 조인으로서의 조인의 자격을 박탈하는 것이다.
@@ -136,8 +153,8 @@
                 ```sql
                 SELECT * FROM employee NATURAL JOIN department;
                 ```
-            * 결과  
-                <img src="./images/natural-join.png" width="50%" height="50%">
+
+
         3. **교차 조인(CROSS JOIN)**
             * 조인되는 두 테이블에서 곱집합을 반환한다. 
             * 즉, 두 번째 테이블로부터 각 행과 첫 번째 테이블에서 각 행이 한번씩 결합된 열을 만들 것이다.
@@ -150,8 +167,8 @@
                 ```sql
                 SELECT * FROM employee, department;
                 ```
-            * 결과  
-                <img src="./images/cross-join.png" width="70%" height="70%">
+
+                
     2. **외부 조인(OUTER JOIN)**
         * 조인 대상 테이블에서 특정 테이블의 데이터가 모두 필요한 상황에서 외부 조인을 활용하여 효과적으로 결과 집합을 생성할 수 있다.
         1. **왼쪽 외부 조인(LEFT OUTER JOIN)**
@@ -163,8 +180,8 @@
                 FROM employee LEFT OUTER JOIN department
                 ON employee.DepartmentID = department.DepartmentID;
                 ```
-            * 결과  
-                <img src="./images/left-outer-join.png" width="70%" height="70%">
+
+  
         2. **오른쪽 외부 조인(RIGHT OUTER JOIN)**
             * 좌측 테이블에 조인할 컬럼의 값이 없는 경우 사용한다.
             * 즉, 우측 테이블의 모든 데이터를 포함하는 결과 집합을 생성한다.
@@ -174,8 +191,8 @@
                 FROM employee RIGHT OUTER JOIN department
                 ON employee.DepartmentID = department.DepartmentID;
                 ```
-            * 결과  
-                <img src="./images/right-outer-join.png" width="70%" height="70%">
+
+
         3. **완전 외부 조인(FULL OUTER JOIN)**
             * 양쪽 테이블 모두 OUTER JOIN이 필요할 때 사용한다.
             * SQL
@@ -184,17 +201,21 @@
                 FROM employee FULL OUTER JOIN department
                 ON employee.DepartmentID = department.DepartmentID;
                 ```
-            * 결과  
-                <img src="./images/full-outer-join.png" width="70%" height="70%">
+
     3. **셀프 조인(SELF JOIN)**
         * 한 테이블에서 자기 자신에 조인을 시키는 것이다.
+
+          
 * 조인을 사용할 때 주의사항
     * SQL 문장의 의미를 제대로 파악
         * SQL을 어떻게 작성하느냐에 따라 성능이 크게 좌우된다. 어떤 질의를 수행할 것인지를 명확하게 정의한 후, 비효율을 제거하여 최적의 SQL을 작성해야 한다.
     * 명확한 조인 조건 제공
         * 조인 조건을 명확하게 제공하지 않을 경우, 의도치 않게 CROSS JOIN(Cartesian Product)이 수행될 수 있다.
+     
+          
 * 조인을 사용할 때 고려사항
     * 조인할 대상의 집합을 최소화
         * 집합을 최소화할 방법이 있으면, 조건을 먼저 적용하여 관계를 맺을 집합을 최소화한 후, 조인을 맺는 것이 효율적이다.
     * 효과적인 인덱스의 활용
         * 인덱스를 활용하면, 조인 연산의 비용을 극적으로 낮출 수 있다.
+
